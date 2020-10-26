@@ -11,7 +11,7 @@
 
 ### Step 2. 代码库根目录下添加bkci插件配置文件：task.json
 
-task.jaon配置规则详见：[插件开发规范](../../../docs/wiki/plugin_dev.md)
+task.json配置规则详见：[插件配置规范](https://github.com/ci-plugins/ci-plugins-wiki/blob/master/specification/plugin_config.md)
 
 task.json简单示例如下：
 
