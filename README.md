@@ -33,7 +33,7 @@ task.json简单示例如下：
     "language": "java",
     "minimumVersion": "1.8",
     "demands": [],
-    "target": "java -jar demo-jar-with-dependencies.jar"
+    "target": "$bk_java_path -jar demo-jar-with-dependencies.jar"
   },
   "input": {
     "desc": {
