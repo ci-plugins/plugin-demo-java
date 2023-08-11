@@ -8,7 +8,11 @@ import com.tencent.bk.devops.atom.pojo.StringData;
 import com.tencent.bk.devops.atom.spi.AtomService;
 import com.tencent.bk.devops.atom.spi.TaskAtom;
 import com.tencent.bk.devops.atom.task.pojo.AtomParam;
+import com.tencent.bk.devops.atom.task.pojo.constant.ErrorCodeConstants;
+import com.tencent.bk.devops.atom.utils.I18nUtil;
+import com.tencent.bk.devops.atom.utils.MessageUtil;
 import com.tencent.bk.devops.atom.utils.json.JsonUtil;
+import com.tencent.bk.devops.plugin.pojo.ErrorType;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +45,21 @@ public class DemoAtom implements TaskAtom<AtomParam> {
             return;
         }
         // 3. 模拟处理插件业务逻辑
-        logger.info("the desc is :{}", param.getDesc()); //打印描述信息
+        logger.groupStart("Task log"); // 控制前端日志折叠的首尾行
+        logger.info("the desc is :{}", param.getDesc()); // 打印描述信息
+        logger.groupEnd("Task log");
+
+        try {
+            Thread.sleep(1000); // 模拟某种可能出错的业务场景
+        } catch (Exception e) {
+            // 设置错误信息
+            result.setErrorInfo(
+                Status.error,
+                ErrorCodeConstants.UNKNOWN_ERROR,
+                ErrorType.PLUGIN,
+                null
+            );
+        }
         // 4. 输出参数，如果有的话
         // 输出参数是一个Map,Key是参数名， value是值对象
         Map<String, DataField> data = result.getData();
@@ -62,8 +80,14 @@ public class DemoAtom implements TaskAtom<AtomParam> {
     private void checkParam(AtomParam param, AtomResult result) {
         // 参数检查
         if (StringUtils.isBlank(param.getDesc())) {
-            result.setStatus(Status.failure);// 状态设置为失败
-            result.setMessage("描述不能为空!"); // 失败信息回传给插件执行框架会打印出结果
+            // 根据语言信息获取字段名称
+            String descName = MessageUtil.getMessageByLocale("input.desc.label", I18nUtil.getLanguage());
+            result.setErrorInfo(
+                Status.failure,
+                ErrorCodeConstants.PARAMETER_IS_NULL,
+                ErrorType.USER,
+                new String[]{descName}
+            );
         }
 
         /*

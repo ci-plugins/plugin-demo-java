@@ -1,5 +1,6 @@
 {
   "atomCode": "plugin-demo-java",
+  "defaultLocaleLanguage" : "zh_CN",
   "execution": {
     "packagePath": "plugin-demo-java-jar-with-dependencies.jar",
     "language": "java",
@@ -7,24 +8,47 @@
     "demands": [],
     "target": "$bk_java_path -jar plugin-demo-java-jar-with-dependencies.jar"
   },
-  "input": {
-    "desc": {
-      "label": "描述",
-      "default": "123",
-      "placeholder": "请输入描述信息",
-      "type": "vuex-input",
-      "desc": "描述",
-      "required": true,
-      "disabled": false,
-      "hidden": false,
-      "isSensitive": false
+  "input" : {
+    "desc" : {
+      "label" : "描述",
+      "default" : "",
+      "placeholder" : "请输入描述信息",
+      "type" : "vuex-input",
+      "desc" : "描述",
+      "required" : true,
+      "disabled" : false,
+      "hidden" : false,
+      "isSensitive" : false
+    },
+    "pullType": {
+      "label": "指定拉取方式",
+      "default": "BRANCH",
+      "type": "select-input",
+      "required": false,
+      "optionsConf": {
+        "searchable": true
+      },
+      "options": [
+        {
+          "id": "BRANCH",
+          "name": "分支"
+        },
+        {
+          "id": "TAG",
+          "name": "标签"
+        },
+        {
+          "id": "COMMIT_ID",
+          "name": "提交ID"
+        }
+      ]
     }
   },
-  "output": {
-    "testResult": {
-      "description": "升级是否成功",
-      "type": "string",
-      "isSensitive": false
+  "output" : {
+    "testResult" : {
+      "description" : "升级是否成功",
+      "type" : "string",
+      "isSensitive" : false
     }
   }
 }
