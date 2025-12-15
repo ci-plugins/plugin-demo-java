@@ -5,6 +5,7 @@
     "packagePath": "plugin-demo-java-jar-with-dependencies.jar",
     "language": "java",
     "minimumVersion": "1.8",
+    "runtimeVersion" : "17",
     "demands": [],
     "target": "$bk_java_path -jar plugin-demo-java-jar-with-dependencies.jar"
   },
